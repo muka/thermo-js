@@ -1,7 +1,40 @@
+@font-face {
+  font-family: DigitalDream;
+  src: url("/fonts/Digital-dream/DIGITALDREAM.ttf"); }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\000037}}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-a {
-  color: #00b7ff;
-}
+  margin: 20% 0 0 0; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000311}}
+#thermo-container {
+  width: 480px;
+  margin: 0 auto; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000317}}
+#requestedTemperature .value, #requestedTemperature .unit {
+  float: right; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000324}}
+.value, .unit {
+  float: left;
+  font-family: DigitalDream, sans-serif;
+  font-size: 2em; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000331}}
+.selector {
+  display: block;
+  clear: both;
+  width: 90%; }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000340}}
+#led {
+  background-color: red;
+  border-radius: 1em;
+  width: 25px;
+  height: 25px;
+  margin: .4em;
+  float: right; }
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000351}}
+  #led.on {
+    background-color: greenyellow; }

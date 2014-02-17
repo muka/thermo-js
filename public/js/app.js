@@ -6,6 +6,9 @@ define(["backbone", "socketio"], function(Backbone, io) {
         var me = this;
         var socket = io.connect(CONFIG.socket.uri);
 
+        me.currentTemperatureView = null;
+        me.requestedTemperatureView = null;
+
         var temperatureModel = Backbone.Model.extend({});
 
         var currentTemperatureView = Backbone.View.extend({
@@ -54,6 +57,14 @@ define(["backbone", "socketio"], function(Backbone, io) {
 
                 currentTemperatureView.prototype.render.call(this);
                 this.setSelector(this.getTemperature());
+
+                if(this.getTemperature() > me.currentTemperatureView.getTemperature()) {
+                    $('#led').addClass('on');
+                }
+                else {
+                    $('#led').removeClass('on');
+                }
+
             }
 
         });
