@@ -1,0 +1,12 @@
+{
+  "name": "thermo-js",
+  "private": true,
+  "dependencies": {
+    "requirejs": null,
+    "backbone": null,
+    "underscore": null,
+    "jquery": null,
+    "socket.io": null
+  },
+  "devDependencies": {}
+}

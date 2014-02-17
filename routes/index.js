@@ -3,28 +3,16 @@
  * GET home page.
  */
 
+var config = require('../config');
+
 exports.index = function(req, res) {
 
-    var devtty = "/dev/ttyUSB0";
-
-    var serialport = require("serialport");
-    var SerialPort = serialport.SerialPort; // localize object constructor
-
-    var sp = new SerialPort(devtty, {
-        baudrate: 9600,
-        parser: serialport.parsers.readline("\n")
+    res.render('index', {
+        config: {
+            socket: {
+                uri: ["http://", config.host, ":", config.port].join('')
+            }
+        }
     });
-
-//    var temp;
-//    sp.on("data", function (data) {
-//
-//        temp = data;
-//
-//        res.render('index', {
-//            title: 'Temperature',
-//            temperature: temp
-//        });
-//    });
-
 
 };

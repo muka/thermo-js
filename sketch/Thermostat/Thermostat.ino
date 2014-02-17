@@ -17,20 +17,25 @@ const int rotaryAnalogPin = 1;
 SerialLCD slcd(lcdPin1,lcdPin2);
 
 
-int requestedTemperature = 0;
+float requestedTemperature = 0;
 float temperature = 0;
 
-const int celsius = 1; // 1 celsius / 0 farheneit, but has to be handled thought
+float rotaryValue = 0;
+
+
+
+const int celsius = 1; // 1 celsius / 0 farheneit, but has to be implemented
 const int minTemperature = 15; // means OFF
 const int maxTemperature = 30; // means VERY HOT
-
-int rotaryValue = 0;
 
 int lastStatus = LOW;
 int lightStatus = 0;         // variable for reading the pushbutton status
 
 unsigned long timer1 = 0;
 unsigned long timer2 = 0;
+unsigned long timerBackLight = 0;
+
+int backLightTimeout = 5000;
 
 int getTemperature() {
 
@@ -43,7 +48,7 @@ int getTemperature() {
   return (int)temperature;
 }
 
-float getRotaryData() {
+int getRotaryData() {
   // range: 0-1023
   int value = analogRead(rotaryAnalogPin);
   
@@ -52,29 +57,75 @@ float getRotaryData() {
 
   // find value for 1 of 15 on rotary value
   float tempValue = minTemperature + (value / (1024/ (maxTemperature - minTemperature) ));
-
+  
+  int changed = 0;
   if(tempValue != rotaryValue) {
+    
+    changed = 1;
+    
+    /*    
     Serial.print("New rotary value: ");
     Serial.print(value);
     Serial.print(" - temp: ");
     Serial.println(tempValue);
+    */
   }
 
   rotaryValue = tempValue;
-  return tempValue;
+  
+  return changed;
 }
 
 int checkTimer(unsigned long *timer, unsigned long interval) {
   unsigned long currTimer = millis();
   if(currTimer - *timer > interval) {
-    // save the last time you blinked the LED
     *timer = currTimer;
     return 1;
   }
   return 0;
 }
 
-void readSerial() {
+/*
+  Handle timed LCD backLight on/off based on 
+*/
+int __backlightOn = 0;
+void backLightHandler(int turnOn) {
+  
+  if(turnOn == 1) {
+    
+    if(__backlightOn != 1) {    
+//      Serial.println("TURN **ON** LIGHT");
+      __backlightOn = 1;
+      slcd.backlight();
+    }
+  
+  }
+  else {
+    
+    if(__backlightOn != 0) {
+      if(checkTimer(&timerBackLight, backLightTimeout) == 1) {
+//        Serial.println("TURN **OFF** LIGHT");      
+        __backlightOn = 0;
+        slcd.noBacklight();  
+      }
+    }
+    
+  }
+}
+
+void backLightOff() {
+  timerBackLight = 0;
+  backLightHandler(0);
+}
+
+void backLightOn() {
+  timerBackLight = millis();
+  backLightHandler(1);
+}
+
+int readSerial() {
+  
+  int val = 0;
   // send data only when you receive data:
   if (Serial.available() > 0) {
     
@@ -86,15 +137,30 @@ void readSerial() {
         character = Serial.read();
         if(character == '\n')
           break;
-          
+
         content.concat(character);
         delay(10);
     }
 
-    Serial.println("Command:");
-    Serial.println(content);
+//    Serial.println("Command:");
+//    Serial.println(content);
 
+    char str[256];
+    content += "\0";
+    
+    strncpy(str, content.c_str(), sizeof(str));
+
+    token_list_t *token_list = NULL;
+    token_list = create_token_list(25); 
+    
+    json_to_token_list(str, token_list); 
+    val = atoi(json_get_value(token_list, "r"));
+
+    release_token_list(token_list); // Release or Wipe the Token List, else memory-leak at your own peril.
+    
   }
+  
+  return val;
 }
 
 void setup() {
@@ -110,16 +176,19 @@ void setup() {
  
   // set up
   slcd.begin();
-  slcd.backlight();
-  
+  backLightOn();
+
 }
 
 void loop() {
+
   // read the state of the pushbutton value:
   int buttonState = digitalRead(buttonPin);
 
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
+  //
+  /*  
   if (buttonState == HIGH) {
 
     if(checkTimer(&timer2, 500) == 1) {    
@@ -135,26 +204,36 @@ void loop() {
       }
     }
   }
+  //*/
   // set the cursor to column 0, line 1
   // (note: line 1 is the second row, since counting begins with 0):
 //  slcd.setCursor(0, 0);  
-//  slcd.print("Temperature");  
+//  slcd.print("Temperature");   
+  
 
   // getRotaryData
-  float rotaryVal = getRotaryData();
-  
-  // @todo change only if rotary has been used
-  requestedTemperature = rotaryVal;
-  
+  if(getRotaryData() == 1) {
+    backLightOn();
+    requestedTemperature = rotaryValue;
+  } 
+
+  /*
+   * Read from serial
+   */
+  int serialVal = readSerial();
+  if(serialVal > 0) {
+    backLightOn();
+    requestedTemperature = serialVal;
+  }
+    
   temperature = getTemperature();
-  
   
   // write to display  
   slcd.setCursor(0, 0);
   slcd.print(temperature, 0);
 //  slcd.print("°");  
   slcd.print("            ");
-  slcd.print(rotaryVal, 0);
+  slcd.print(requestedTemperature, 0);
 //  slcd.print("°");
 
   slcd.setCursor(0, 1);
@@ -183,18 +262,15 @@ void loop() {
 //    Serial.print("{ millis: ");
 //    Serial.print(millis());
 //    Serial.print(", ");
-    Serial.print("temperature: ");
+    Serial.print("\"t\":");
     Serial.print(temperature);
-    Serial.print(", requested: ");
+    Serial.print(",\"r\":");
     Serial.print(requestedTemperature);
     Serial.print("}\n");
    
   }
-  
-  /*
-   * Read from serial
-   */
-   readSerial(); 
+     
+  backLightHandler(0);
   
 }
 
