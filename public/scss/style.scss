@@ -1,4 +1,5 @@
 
+
 @font-face {
     font-family: DigitalDream;
     src: url("/fonts/Digital-dream/DIGITALDREAM.ttf");
@@ -14,7 +15,8 @@ body {
 }
 
 #requestedTemperature {
-    .value, .unit {
+
+   .value, .unit {
         float: right;
     }
     .value {

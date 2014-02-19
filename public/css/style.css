@@ -2,32 +2,32 @@
   font-family: DigitalDream;
   src: url("/fonts/Digital-dream/DIGITALDREAM.ttf"); }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\000037}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\000038}}
 body {
   margin: 20% 0 0 0; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000311}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000312}}
 #thermo-container {
   width: 480px;
   margin: 0 auto; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000317}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000319}}
 #requestedTemperature .value, #requestedTemperature .unit {
   float: right; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000324}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000326}}
 .value, .unit {
   float: left;
   font-family: DigitalDream, sans-serif;
   font-size: 2em; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000331}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000333}}
 .selector {
   display: block;
   clear: both;
   width: 90%; }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000340}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000342}}
 #led {
   background-color: red;
   border-radius: 1em;
@@ -35,6 +35,6 @@ body {
   height: 25px;
   margin: .4em;
   float: right; }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000351}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/l\/git\/bitbucket\.org\/thermo-js\/public\/scss\/style\.scss}line{font-family:\0000353}}
   #led.on {
     background-color: greenyellow; }

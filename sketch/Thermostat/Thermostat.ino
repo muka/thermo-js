@@ -1,7 +1,7 @@
 #include <SerialLCD.h>
 #include <SoftwareSerial.h>
 #include <math.h>
-#include <json_arduino.h>
+
 
 // digital pin
 const int relayPin =  2;      // relay
@@ -123,41 +123,46 @@ void backLightOn() {
   backLightHandler(1);
 }
 
-int readSerial() {
+float readSerial() {
   
-  int val = 0;
+  float val = 0;
   // send data only when you receive data:
   if (Serial.available() > 0) {
     
     String content = "";
     char character;
-  
+    int charCount = 0;
+    
     while(Serial.available()) {
       
         character = Serial.read();
         if(character == '\n')
           break;
-
+  
+        // control code for request a temperature is R
+        // eg 25R
+        if(character == 'R') {
+          
+          Serial.print("dbg: found control code R:"); Serial.println(content);
+          
+          char str[8];
+          strncpy(str, content.c_str(), sizeof(str));
+          // str[charCount+1] = '\0';
+          val = atof(str);
+          
+          Serial.print("dbg: parsed value:"); Serial.println(val);
+          
+          break;
+        }
+        
         content.concat(character);
+        charCount++;
         delay(10);
-    }
 
-//    Serial.println("Command:");
-//    Serial.println(content);
-
-    char str[256];
-    content += "\0";
+    } // /while
     
-    strncpy(str, content.c_str(), sizeof(str));
+    Serial.print("dbg: value:"); Serial.println(content);
 
-    token_list_t *token_list = NULL;
-    token_list = create_token_list(25); 
-    
-    json_to_token_list(str, token_list); 
-    val = atoi(json_get_value(token_list, "r"));
-
-    release_token_list(token_list); // Release or Wipe the Token List, else memory-leak at your own peril.
-    
   }
   
   return val;
@@ -183,7 +188,7 @@ void setup() {
 void loop() {
 
   // read the state of the pushbutton value:
-  int buttonState = digitalRead(buttonPin);
+//  int buttonState = digitalRead(buttonPin);
 
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
@@ -220,9 +225,13 @@ void loop() {
   /*
    * Read from serial
    */
-  int serialVal = readSerial();
-  if(serialVal > 0) {
+  float serialVal = readSerial();
+
+  if(serialVal >= minTemperature && serialVal <= maxTemperature) {
     backLightOn();
+    Serial.print("{\"msg\": \"Set value ");
+    Serial.print(serialVal);
+    Serial.println("\"}");
     requestedTemperature = serialVal;
   }
     
