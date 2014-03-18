@@ -54,7 +54,17 @@ Installation
 ---
 
 * Push the code to the arduino board with the IDE
-* Setup the server code with `npm install && bower install` in the repository root. 
+* Setup the server code editing config/index.js and set your ip and port. Then
+
+```
+cd thermo-js
+
+npm install 
+bower install
+
+node app.js
+
+```
 
 
 License
