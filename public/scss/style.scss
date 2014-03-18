@@ -1,0 +1,56 @@
+
+
+@font-face {
+    font-family: DigitalDream;
+    src: url("/fonts/Digital-dream/DIGITALDREAM.ttf");
+}
+
+body {
+    margin: 20% 0 0 0;
+}
+
+#thermo-container {
+    width: 480px;
+    margin: 0 auto;
+}
+
+#requestedTemperature {
+
+   .value, .unit {
+        float: right;
+    }
+    .value {
+    }
+}
+
+.value, .unit {
+    float:left;
+
+    font-family: DigitalDream, sans-serif;
+    font-size: 2em;
+}
+
+.selector {
+    display: block;
+    clear: both;
+    width: 90%;
+}
+
+#menu {}
+
+
+#led {
+
+    background-color: red;
+    border-radius: 1em;
+
+    width: 25px;
+    height: 25px;
+
+    margin: .4em;
+    float: right;
+
+    &.on {
+        background-color: greenyellow;
+    }
+}

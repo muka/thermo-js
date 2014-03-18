@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>thermostat</title>
+
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        CONFIG = JSON.parse('<%-JSON.stringify(config)%>');
+    </script>
+    <script data-main="js/main" src="/libs/requirejs/require.js"></script>
+
+  </head>
+  <body>
+      <%- body %>
+  </body>
+</html>
