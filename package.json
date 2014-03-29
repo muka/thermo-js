@@ -2,6 +2,10 @@
   "name": "thermo-js",
   "version": "0.0.1",
   "private": false,
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/muka/thermo-js.git"
+  },
   "scripts": {
     "start": "node app.js"
   },
