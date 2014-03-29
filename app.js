@@ -60,6 +60,7 @@ var io = require('socket.io').listen(server);
 
 console.log("Using tty " + config.tty);
 console.log("Baudrate set to " + config.baudrate);
+console.log("Initializing serial port ..\n");
 
 var sp = new SerialPort(config.tty, {
     baudrate: config.baudrate,
@@ -70,6 +71,7 @@ var sp = new SerialPort(config.tty, {
     flowControl: false,
     parser: serialport.parsers.readline("\n"),
 });
+console.log("done.");
 
 
  sp.on('close', function (err) {
@@ -79,6 +81,7 @@ var sp = new SerialPort(config.tty, {
 sp.on('error', function (err) {
     console.error("error", err);
 });
+
 
 sp.on('open', function () {
 

@@ -54,6 +54,7 @@ Installation
 ---
 
 * Push the code to the arduino board with the IDE
+* on linux (and possibly mac too) add your user name to dialout `sudo usermod -a -G dialout USERNAME`. Test with `cat /dev/ttyUSB0` (adapt the name to your tty, and set it accordingly in ./config/index.js)
 * Setup the server code editing config/index.js and set your ip and port. Then
 
 ```
