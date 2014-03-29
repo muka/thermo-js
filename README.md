@@ -29,7 +29,7 @@ Single components used:
 Software
 
 * Arduino IDE http://arduino.cc/en/main/software
-* nodejs http://nodejs.org/download/ or `sudo apt-get install node && sudo npm install -g bower`
+* nodejs http://nodejs.org/download/ or `sudo apt-get install nodejs && sudo npm install -g bower`
 
 
 Setup
